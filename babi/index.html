@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Már csak</title>
+  <title>MÁR CSAAK ❤️</title>
   <style>
     body {
       margin: 0;
@@ -20,10 +20,9 @@
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
     }
-
 
     .timer {
       display: flex;
@@ -36,39 +35,59 @@
 
     .unit {
       background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 0.5rem 1rem;
-      min-width: 60px;
+      border-radius: 12px;
+      padding: 1rem;
     }
 
     .label {
       display: block;
-      font-size: 0.75rem;
-      margin-top: 0.25rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .progress-container {
+      margin-top: 2rem;
+      width: 80%;
+      max-width: 320px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      width: 0%;
+      transition: width 1s ease-in-out;
     }
 
     @media screen and (max-width: 375px) {
       h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
 
       .timer {
-        font-size: 1.25rem;
+        font-size: 1.75rem;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Már csak ❤️</h1>
+  <h1>MÁÁR CSAK ❤️</h1>
   <div class="timer">
-    <div class="unit"><span id="days">00</span><span class="label">nap</span></div>
-    <div class="unit"><span id="hours">00</span><span class="label">óra</span></div>
-    <div class="unit"><span id="minutes">00</span><span class="label">perc</span></div>
-    <div class="unit"><span id="seconds">00</span><span class="label">másodperc</span></div>
+    <div class="unit"><span id="days">00</span><span class="label">NAP</span></div>
+    <div class="unit"><span id="hours">00</span><span class="label">ÓRA</span></div>
+    <div class="unit"><span id="minutes">00</span><span class="label">PERC</span></div>
+    <div class="unit"><span id="seconds">00</span><span class="label">MÁSODPERC</span></div>
+  </div>
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
   </div>
 
   <script>
-    const targetDate = new Date("2025-08-05T17:00:00+02:00").getTime();
+    const startDate = new Date("2025-07-20T00:00:00+02:00").getTime();
+    const targetDate = new Date("2025-08-05T00:00:00+02:00").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -76,6 +95,7 @@
 
       if (distance < 0) {
         document.querySelector(".timer").innerHTML = "❤️ It's time! ❤️";
+        document.getElementById("progress-bar").style.width = "100%";
         return;
       }
 
@@ -88,6 +108,12 @@
       document.getElementById("hours").innerText = String(hours).padStart(2, '0');
       document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
       document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+
+      // Progress bar logic
+      const totalDuration = targetDate - startDate;
+      const elapsed = now - startDate;
+      const progress = Math.max(0, Math.min(100, (elapsed / totalDuration) * 100));
+      document.getElementById("progress-bar").style.width = progress.toFixed(2) + "%";
     }
 
     updateCountdown();
